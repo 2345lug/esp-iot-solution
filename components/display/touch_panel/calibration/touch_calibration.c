@@ -100,7 +100,7 @@ static void _get_point(int8_t index, point_t *cross, point_t *point)
     g_touch_read_rawdata(&tx, &ty);
     point->x = tx;
     point->y = ty;
-    ESP_LOGI(TAG, "[%d] X:%d Y:%d", index, point->x, point->y);
+    ESP_LOGI(TAG, "[%"PRIu8"] X:%"PRIu32" Y:%"PRIu32"", index, point->x, point->y);
 }
 
 /**
@@ -277,7 +277,7 @@ esp_err_t touch_calibration_run(const scr_driver_t *screen,
             + (points[3].y - cross[3].y) * (points[3].y - cross[3].y);
         if (calibrate_error > (uint32_t)GMOUSE_FINGER_CALIBRATE_ERROR * (uint32_t)GMOUSE_FINGER_CALIBRATE_ERROR) {
             show_prompt_with_dir(10, h/2, "Calibration Failed!", &Font16, COLOR_RED, old_dir);
-            ESP_LOGW(TAG, "Touch Calibration failed! Error=%d", calibrate_error);
+            ESP_LOGW(TAG, "Touch Calibration failed! Error=%"PRIu32"", calibrate_error);
             g_calibrated = false;
             index = 0;
             vTaskDelay(2000 / portTICK_PERIOD_MS);
